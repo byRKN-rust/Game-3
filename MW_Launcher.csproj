@@ -1,34 +1,9 @@
-name: Build EXE
+<Project Sdk="Microsoft.NET.Sdk">
 
-on:
-  push:
-    branches: [main]
-  workflow_dispatch:
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
 
-jobs:
-  build:
-    runs-on: windows-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '7.0.x'
-
-    - name: Restore dependencies
-      run: dotnet restore MyGame/MyGame.csproj
-
-    - name: Build
-      run: dotnet build MyGame/MyGame.csproj --configuration Release
-
-    - name: Publish
-      run: dotnet publish MyGame/MyGame.csproj -c Release -r win-x64 --self-contained true -o MyGame/publish
-
-    - name: Upload EXE Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: built-exe
-        path: MyGame/publish
+</Project>
